@@ -1,0 +1,10 @@
+Django==3.2
+gunicorn==20.1.0
+mysqlclient==2.2.0        # In case MySQL DB use kare future me
+psycopg2-binary==2.9.9    # PostgreSQL support
+djangorestframework==3.14.0  # API bana sake future me
+python-decouple==3.8      # Env variables handle karne ke liye
+whitenoise==6.6.0         # Static files serve karne ke liye
+
+# Optional -- production level me useful hote hai
+boto3==1.34.21            # AWS S3, EC2, RDS handle karne ke liye

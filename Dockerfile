@@ -8,8 +8,8 @@ RUN yum -y update && \
     yum clean all
 
 # Install Django & other Python dependencies
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+COPY requirement.txt requirement.txt
+RUN pip install -r requirement.txt
 RUN pip install --upgrade pip
 
 # Copy project code

@@ -13,11 +13,11 @@ RUN yum -y update && \
     && yum clean all
 
 # 2. Install Python packages
-RUN pip3 install && \
+RUN pip3 install \
     Django==4.2.4 \
     mysqlclient==2.1.1 \
     djangorestframework==3.14.0 \
-    django-cors-headers==3.14.0 
+    django-cors-headers==3.14.0
 # 3. Create working directory
 WORKDIR /app
 

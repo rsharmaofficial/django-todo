@@ -2,15 +2,22 @@ FROM amazonlinux:latest
 
 WORKDIR /data
 
-# System update & Python install
+# System update & Python + MySQL build deps
 RUN yum -y update && \
-    yum -y install python3 python3-pip gcc python3-devel && \
-    yum clean all
+    yum -y groupinstall "Development Tools" && \
+    yum -y install \
+    python3 \
+    python3-pip \
+    python3-devel \
+    gcc \
+    mariadb-devel \
+    pkgconfig \
+    && yum clean all
 
-# Install Django & other Python dependencies
+# Install Python dependencies
 COPY requirement.txt requirement.txt
-RUN pip install -r requirement.txt
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip && \
+    pip install -r requirement.txt
 
 # Copy project code
 COPY . .

@@ -6,9 +6,6 @@ RUN yum -y update && \
     yum -y install \
     python3 \
     python3-pip \
-    python3-devel \
-    gcc \
-    mariadb105-devel \
     pkgconf-pkg-config \
     && yum clean all
 

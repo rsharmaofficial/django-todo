@@ -14,7 +14,9 @@ RUN yum -y update && \
     && yum clean all
 
 # Upgrade pip before installing requirements
-RUN pip install --upgrade pip
+RUN python3 -m ensurepip --upgrade && \
+    python3 -m pip install --upgrade pip
+
 
 # Install Django & other Python dependencies
 COPY requirement.txt requirement.txt

@@ -1,8 +1,8 @@
-FROM amazonlinux:latest
+FROM amazonlinux:2023
 
 WORKDIR /data
 
-# System update & Python + MySQL build deps
+# System update and install dependencies
 RUN yum -y update && \
     yum -y groupinstall "Development Tools" && \
     yum -y install \
@@ -10,16 +10,18 @@ RUN yum -y update && \
     python3-pip \
     python3-devel \
     gcc \
-    mariadb-devel \
+    mysql-devel \
     pkgconfig \
     && yum clean all
 
-# Install Python dependencies
-COPY requirement.txt requirement.txt
-RUN pip install --upgrade pip && \
-    pip install -r requirement.txt
+# Upgrade pip first
+RUN pip3 install --upgrade pip
 
-# Copy project code
+# Copy requirements & install Python packages
+COPY requirement.txt requirement.txt
+RUN pip3 install -r requirement.txt
+
+# Copy Django project
 COPY . .
 
 EXPOSE 8000

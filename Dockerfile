@@ -12,8 +12,12 @@ RUN yum -y update && \
     pkgconf-pkg-config \
     && yum clean all
 
-# 2. Upgrade pip safely
-RUN python3 -m pip install --upgrade pip
+# 2. Install Python packages
+RUN pip3 install \
+    Django==3.2 \
+    mysqlclient==2.2.0 \
+    djangorestframework==3.14.0 \
+    django-cors-headers==3.14.0
 
 # 3. Create working directory
 WORKDIR /app

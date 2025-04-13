@@ -1,37 +1,29 @@
-FROM amazonlinux:latest
+FROM amazonlinux:2023
 
-WORKDIR /data
-
-# Install system dependencies
+# 1. Update system and install core tools
 RUN yum -y update && \
+    yum -y groupinstall "Development Tools" && \
     yum -y install \
-        python3 \
-        python3-devel \
-        gcc \
-        make \
-        which \
-        python3-pip \
-        pkgconfig \
-        && yum clean all
+    python3 \
+    python3-pip \
+    python3-devel \
+    gcc \
+    mariadb105-devel \
+    pkgconf-pkg-config \
+    && yum clean all
 
-# Install virtualenv using system pip (skip upgrading pip)
-RUN python3 -m pip install --user virtualenv
+# 2. Upgrade pip safely
+RUN python3 -m pip install --upgrade pip
 
-# Set PATH so that user installed pip packages are found
-ENV PATH="/root/.local/bin:$PATH"
+# 3. Create working directory
+WORKDIR /app
 
-# Create and activate virtual environment
-RUN virtualenv venv
-ENV VIRTUAL_ENV=/data/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Copy requirements and install inside venv
-COPY requirement.txt requirement.txt
+# 4. Copy requirement file and install dependencies
+COPY requirement.txt .
 RUN pip install -r requirement.txt
 
-# Copy rest of the Django project
+# 5. Copy rest of the project
 COPY . .
 
-EXPOSE 8000
-
+# 6. Default command
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]

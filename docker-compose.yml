@@ -1,7 +1,7 @@
 version : "3.3"
 services :
   web :
-     build : .
+     build : byteworriers/django-todo
      ports :
          - "8000:8000"
      volumes:
